@@ -2,7 +2,9 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { fetchHistoryData } from "./my_modules/fetch-history-data";
+import { submitData } from "./my_modules/submit-data";
 
 
 // Your web app's Firebase configuration
@@ -20,53 +22,40 @@ const app = initializeApp(firebaseConfig);
 
 
 
-// Cloud Firestoreの初期化
+// Cloud Firestore の初期化
 const db = getFirestore(app);
 
 
-// Cloud Firestoreから取得したデータを表示するメソッド
-const fetchHistoryDate = async () => {
-  let tags = "";
 
-  // reportsコレクションのデータを取得
-  const querySnapshot = await getDocs(collection(db,"report"));
-
-  // データをテーブル表の形式に合わせてHTMLに挿入
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data()}`);
-    tags += `<tr><td>${doc.data().date}</td><td>${doc.data().name}</td><td>${doc.data().word}</td><td>${doc.data().comment}</td></tr>`
-  });
-
-  document.getElementById("js_history").innerHTML = tags;
-};
-  
-
-
-// Cloud Firestoreから取得したデータを表示するメソッドを実行する。
+// Cloud Firestore から取得したデータを表示するメソッドを実行する。
 if(document.getElementById("js_history")){
-  fetchHistoryDate();
+  fetchHistoryData(getDocs, collection, db);
 }
 
 
+// Cloud Firestore にデータを送信する。
+// const submitData = async (e) => {
+//   e.preventDefault();
+//   const formData = new FormData(e.target);
+
+//   try{
+//     const docRef = await addDoc(collection(db,"report"),{
+//       date: new Date(),
+//       name: formData.get("name"),
+//       word: formData.get("work"),
+//       comment: formData.get("comment"),
+//     });
+//     console.log("Document written with ID: ", docRef.id);
+//     console.log(formData.get("work"));    
+//   }catch (e){
+//     console.error("Error adding document: ", e);
+//   }
+// };
 
 
-
-import './style.css'  
-
-import Splide from '@splidejs/splide';
-
-// デフォルトのテーマ
-import '@splidejs/splide/css';
-
-// または、そのほかのテーマ
-import '@splidejs/splide/css/skyblue';
-import '@splidejs/splide/css/sea-green';
-
-// あるいは、コアスタイルのみ
-import '@splidejs/splide/css/core';
+// Cloud Firestoreにデータを送信する。
+if(document.getElementById("js_form")){
+  document.getElementById("js_form").addEventListener("submit", (e) => submitData(e, addDoc, collection, db));
+}
 
 
-
-new Splide( '.splide',{
-  type   : 'loop',
-} ).mount();
