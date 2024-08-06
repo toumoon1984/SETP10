@@ -2,23 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./public/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite Appssssss</title>
+    <link rel="stylesheet" href="./sanitize.css">
+    <link rel="stylesheet" href="./style.css">
   </head>
+
   <body>
     <!-- <div id="app"></div> -->
-    <script type="module" src="/main.js"></script>
 
-    <section class="splide" aria-label="Splideの基本的なHTML">
-      <div class="splide__track">
-        <ul class="splide__list">
-          <li class="splide__slide">Slide 01</li>
-          <li class="splide__slide">Slide 02</li>
-          <li class="splide__slide">Slide 03</li>
-        </ul>
+    <form class="form" action="" id="js_form">
+      <div class="form_list">
+        <label class="form_title" for="name">Name:</label>
+        <div class="form_field">
+          <input class="input_feild" type="text" id="name" name="name">
+        </div>
       </div>
-    </section>
+
+      <div class="form_list">
+        <label class="form_title" for="work">Work:</label>
+        <div class="form_field">
+          <input class="input_feild" type="text" id="work" name="work">
+        </div>
+      </div>
+
+
+      <div class="form_list">
+        <label class="form_title" for="comment">Comment:</label>
+        <div class="form_field">
+          <textarea class="input_feild" id="comment" name="comment" rows="4" cols="50"></textarea>
+        </div>
+      </div>
+
+      <div class="form_button">
+        <button class="button" type="submit">Submit</button>
+      </div>
+    </form>
+
+    <div class="history_link">
+      <a href="./">Home</a>
+      <a href="./history.html">History</a>
+    </div>
+
+    <script type="module" src="./main.js"></script>
 
   </body>
 </html>
